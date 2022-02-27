@@ -410,6 +410,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemPrefab: {fileID: 6227199700903480247, guid: 3ccfacddaa9e87046bf4f95d0e48f582, type: 3}
   radius: 3
+  totalSheep: 4
 --- !u!4 &246650303
 Transform:
   m_ObjectHideFlags: 0
