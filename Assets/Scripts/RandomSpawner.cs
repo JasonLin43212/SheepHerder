@@ -5,6 +5,7 @@ using UnityEngine;
 public class RandomSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject ItemPrefab; //public GameObject ItemPrefab;
+    [SerializeField] private GameObject ItemPrefab2; // black sheep
     [SerializeField] private float radius = 1; //public float radius = 1;
     [SerializeField] private float totalSheep = 3; 
     private float counter = 0; 
@@ -29,7 +30,13 @@ public class RandomSpawner : MonoBehaviour
 
     void SpawnObjectAtRandom(){
         Vector3 randomPos = Random.insideUnitCircle * radius;
-        Instantiate(ItemPrefab, this.transform.position + randomPos, Quaternion.identity); //Instantiate(ItemPrefab, this.transform.position + randomPos, Quaternion.identity);
+        var val = Random.value;
+        if (val < 0.5f){
+            Instantiate(ItemPrefab, this.transform.position + randomPos, Quaternion.identity); 
+        } else {
+            Instantiate(ItemPrefab2, this.transform.position + randomPos, Quaternion.identity); 
+        }
+        //Instantiate(ItemPrefab, this.transform.position + randomPos, Quaternion.identity); //Instantiate(ItemPrefab, this.transform.position + randomPos, Quaternion.identity);
         CancelInvoke();
         counter = counter + 1;
     }
