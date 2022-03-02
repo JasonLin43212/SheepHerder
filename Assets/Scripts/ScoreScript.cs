@@ -22,9 +22,15 @@ public class ScoreScript : MonoBehaviour
         score = GetComponent<Text>();
     }
 
-    public void AddPoint()
+    public void setScore(int s)
     {
-        scoreValue += 1;
+        scoreValue = s;
         score.text = "Score: " + scoreValue.ToString();
+
+        GameObject[] blackSheepSpawned;
+        blackSheepSpawned = GameObject.FindGameObjectsWithTag("BlackSquare");
+
+        GameObject[] whiteSheepSpawned;
+        whiteSheepSpawned = GameObject.FindGameObjectsWithTag("WhiteSquare");
     }
 }

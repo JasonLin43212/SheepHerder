@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class RandomSpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject ItemPrefab; //public GameObject ItemPrefab;
-    [SerializeField] private GameObject ItemPrefab2; // black sheep
+    [SerializeField] private GameObject WhiteSheep; //public GameObject ItemPrefab;
+    [SerializeField] private GameObject BlackSheep; // black sheep
     [SerializeField] private float radius = 1; //public float radius = 1;
-    [SerializeField] private float totalSheep = 3; 
+    [SerializeField] private float totalSheep = 10; 
     private float counter = 0; 
     // Start is called before the first frame update
     void Start()
@@ -25,16 +25,17 @@ public class RandomSpawner : MonoBehaviour
         // if (Input.GetKeyDown(KeyCode.Space)) {
         //     SpawnObjectAtRandom();
         // }
+        
     }
-    
+
 
     void SpawnObjectAtRandom(){
         Vector3 randomPos = Random.insideUnitCircle * radius;
         var val = Random.value;
         if (val < 0.5f){
-            Instantiate(ItemPrefab, this.transform.position + randomPos, Quaternion.identity); 
+            Instantiate(WhiteSheep, this.transform.position + randomPos, Quaternion.identity); 
         } else {
-            Instantiate(ItemPrefab2, this.transform.position + randomPos, Quaternion.identity); 
+            Instantiate(BlackSheep, this.transform.position + randomPos, Quaternion.identity); 
         }
         //Instantiate(ItemPrefab, this.transform.position + randomPos, Quaternion.identity); //Instantiate(ItemPrefab, this.transform.position + randomPos, Quaternion.identity);
         CancelInvoke();
@@ -45,4 +46,6 @@ public class RandomSpawner : MonoBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(this.transform.position, radius);
     }
+
+    
 }
