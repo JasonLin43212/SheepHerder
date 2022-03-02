@@ -22,9 +22,8 @@ public class ScoreScript : MonoBehaviour
         score = GetComponent<Text>();
     }
 
-    public void setScore(int s)
+    void Update()
     {
-        scoreValue = s;
         score.text = "Score: " + scoreValue.ToString();
 
         GameObject[] blackSheepSpawned;
@@ -32,5 +31,12 @@ public class ScoreScript : MonoBehaviour
 
         GameObject[] whiteSheepSpawned;
         whiteSheepSpawned = GameObject.FindGameObjectsWithTag("WhiteSquare");
+
+        foreach (GameObject sheep in blackSheepSpawned)
+        {
+            float sheepX = sheep.transform.position.x;
+            float sheepY = sheep.transofrm.position.y;
+            //if ( > )
+        }
     }
 }
