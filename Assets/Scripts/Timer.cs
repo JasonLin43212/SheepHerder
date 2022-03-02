@@ -7,7 +7,7 @@ using TMPro;
 public class Timer : MonoBehaviour
 {
 
-float countDown = 10.0f; //time in seconds
+float countDown = 120.0f; //time in seconds
 public Text textVariable; //[SerializeField] private TMPro.TMP_Text textVariable;
 
 void Score() {
