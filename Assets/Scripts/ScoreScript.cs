@@ -35,7 +35,7 @@ public class ScoreScript : MonoBehaviour
         foreach (GameObject sheep in blackSheepSpawned)
         {
             float sheepX = sheep.transform.position.x;
-            float sheepY = sheep.transofrm.position.y;
+            float sheepY = sheep.transform.position.y;
             //if ( > )
         }
     }
