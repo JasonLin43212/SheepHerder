@@ -4,13 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class ScoreScript : MonoBehaviour
+public class P1ScoreTMP : MonoBehaviour
 {
-    public static ScoreScript instance;
+    public static P1ScoreTMP instance;
 
     public int player1Score = 0;
 
-    public Text score;
+    public TMPro.TMP_Text score;
 
     private void Awake()
     {
@@ -21,7 +21,6 @@ public class ScoreScript : MonoBehaviour
     void Start()
     {
         score.text = "P1 Score: " + player1Score.ToString();
-        score = GetComponent<Text>();
     }
 
     void Update()
