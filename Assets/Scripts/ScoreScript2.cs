@@ -19,7 +19,7 @@ public class ScoreScript2 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        score.text = "Player 2 Score: " + player2Score.ToString();
+        score.text = "P2 Score: " + player2Score.ToString();
         score = GetComponent<Text>();
 
     }
@@ -45,6 +45,12 @@ public class ScoreScript2 : MonoBehaviour
                 player2Score += 1;
             }
 
+            //upper right square (incorrectly sorted)
+            if (sheepX > 9 && sheepX < 15 && sheepY < 9 && sheepY > 3)
+            {
+                player2Score -= 2;
+            }
+
 
         }
 
@@ -60,9 +66,15 @@ public class ScoreScript2 : MonoBehaviour
                 player2Score += 1;
             }
 
+            //lower right square (incorrectly sorted)
+            if (sheepX > 9 && sheepX < 15 && sheepY < -3 && sheepY > -9)
+            {
+                player2Score -= 2;
+            }
+
         }
 
 
-        score.text = "Player 2 Score: " + player2Score.ToString();
+        score.text = "P2 Score: " + player2Score.ToString();
     }
 }
