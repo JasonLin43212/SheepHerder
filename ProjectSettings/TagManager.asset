@@ -6,6 +6,7 @@ TagManager:
   tags:
   - BlackSquare
   - WhiteSquare
+  - Wall
   layers:
   - Default
   - TransparentFX

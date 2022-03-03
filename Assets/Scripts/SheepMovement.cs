@@ -42,6 +42,10 @@ public class SheepMovement : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        movementDirection *= -1;
+
+        if (collision.gameObject.tag == "Wall")
+        {
+            movementDirection *= -1;
+        }
     }
 }
