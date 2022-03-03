@@ -7,7 +7,7 @@ using TMPro;
 public class Timer : MonoBehaviour
 {
 
-float countDown = 120.0f; //time in seconds
+float countDown = 300.0f; //time in seconds
 public Text textVariable; //[SerializeField] private TMPro.TMP_Text textVariable;
 
 void Score() {
@@ -16,9 +16,11 @@ void Score() {
 void Update() {     
     if(countDown > 0) {         
         countDown -= Time.deltaTime;     
-    }     
-    double currTime = System.Math.Round (countDown, 2);     
-    textVariable.text = currTime.ToString();     
+    }   
+    string minute = Mathf.Floor(countDown / 60).ToString("00");  
+    string seconds = (countDown % 60).ToString("00"); 
+    //double currTime = System.Math.Round (countDown, 2);     
+    textVariable.text = minute + ":" + seconds; //currTime.ToString();     
     if(countDown < 0){       
         Debug.Log("Completed");     
     } 
