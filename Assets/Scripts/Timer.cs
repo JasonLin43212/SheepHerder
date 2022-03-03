@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic; 
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class Timer : MonoBehaviour
@@ -22,7 +23,8 @@ void Update() {
     //double currTime = System.Math.Round (countDown, 2);     
     textVariable.text = minute + ":" + seconds; //currTime.ToString();     
     if(countDown < 0){       
-        Debug.Log("Completed");     
+        Debug.Log("Completed"); 
+        SceneManager.LoadScene("Credits");    
     } 
 }
 
