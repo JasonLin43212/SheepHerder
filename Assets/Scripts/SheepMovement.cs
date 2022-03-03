@@ -36,8 +36,33 @@ public class SheepMovement : MonoBehaviour
         }
 
         //move enemy: 
-        transform.position = new Vector2(transform.position.x + (movementPerSecond.x * Time.deltaTime),
+        Vector2 temp_position = new Vector2(transform.position.x + (movementPerSecond.x * Time.deltaTime),
         transform.position.y + (movementPerSecond.y * Time.deltaTime));
+
+    /*    //upper left square
+        if (temp_position.x > -16 && temp_position.x < -10 && temp_position.y < 9 && temp_position.y > 3)
+        {
+            return;
+        }
+        //lower left square
+        else if (temp_position.x > -16 && temp_position.x < -10 && temp_position.y < -3 && temp_position.y > -9){
+            return;
+        }
+        //lower right 
+        else if (temp_position.x > 9 && temp_position.x < 15 && temp_position.y < -3 && temp_position.y > -9)
+        {
+            return;
+        }
+        //upper right
+        else if (temp_position.x > 9 && temp_position.x < 15 && temp_position.y < 9 && temp_position.y > 3)
+        {
+            return;
+        }       
+        //only update if not in a pen
+        else{*/
+            transform.position = temp_position;
+        /*}*/
+
 
     }
     private void OnCollisionEnter2D(Collision2D collision)
