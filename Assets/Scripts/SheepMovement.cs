@@ -4,25 +4,31 @@ using UnityEngine;
 
 public class SheepMovement : MonoBehaviour
 {
+    private Rigidbody2D body;
     private float latestDirectionChangeTime;
     private float directionChangeTime = 3f;
-    private float characterVelocity = 0.5f;
-    private Vector2 movementDirection;
-    private Vector2 movementPerSecond;
-
+    private float characterSpeed = 0.5f;
+    private float runSpeed = 2.0f;
+    private float pushSpeed = 1.0f;
+    private Vector2 currentVelocity; 
+    private bool pushed;
 
     void Start()
     {
+        body = GetComponent<Rigidbody2D>();
         latestDirectionChangeTime = 0f;
         directionChangeTime = Random.Range(3f, 7f);
         calcuateNewMovementVector();
+        
     }
 
     void calcuateNewMovementVector()
     {
+        latestDirectionChangeTime = Time.time;
+        directionChangeTime = Random.Range(3f, 7f);
+        pushed = false;
         //create a random direction vector with the magnitude of 1, later multiply it with the velocity of the enemy
-        movementDirection = new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f)).normalized;
-        movementPerSecond = movementDirection * characterVelocity;
+        currentVelocity = new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f)).normalized * characterSpeed;
     }
 
     void Update()
@@ -30,17 +36,13 @@ public class SheepMovement : MonoBehaviour
         //if the changeTime was reached, calculate a new movement vector
         if (Time.time - latestDirectionChangeTime > directionChangeTime)
         {
-            latestDirectionChangeTime = Time.time;
             calcuateNewMovementVector();
-            directionChangeTime = Random.Range(3f, 7f);
+        } else {
+            if (!pushed) {
+                body.velocity = currentVelocity;
+            }
         }
 
-        //move enemy: 
-        Vector3 temp_position = new Vector3(
-            transform.position.x + (movementPerSecond.x * Time.deltaTime),
-            transform.position.y + (movementPerSecond.y * Time.deltaTime),
-            transform.position.z
-        );
 
     /*    //upper left square
         if (temp_position.x > -16 && temp_position.x < -10 && temp_position.y < 9 && temp_position.y > 3)
@@ -63,7 +65,6 @@ public class SheepMovement : MonoBehaviour
         }       
         //only update if not in a pen
         else{*/
-            transform.position = temp_position;
         /*}*/
 
 
@@ -73,7 +74,22 @@ public class SheepMovement : MonoBehaviour
 
         if (collision.gameObject.tag == "Wall")
         {
-            movementDirection *= -1;
+            calcuateNewMovementVector();
         }
+    }
+
+    public void runAway(Vector2 dogLocation) {
+        pushed = false;
+        Vector2 runDirection = new Vector2(transform.position.x, transform.position.y) - dogLocation;
+        currentVelocity = runDirection.normalized * runSpeed;
+        latestDirectionChangeTime = Time.time;
+        directionChangeTime = Random.Range(4f, 6f);
+    }
+
+    public void push(Vector2 dogVelocity) {
+        pushed = true;
+        latestDirectionChangeTime = Time.time;
+        directionChangeTime = 1f;
+        body.velocity = dogVelocity * 0.95f;
     }
 }
