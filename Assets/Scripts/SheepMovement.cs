@@ -9,7 +9,6 @@ public class SheepMovement : MonoBehaviour
     private float directionChangeTime = 3f;
     private float characterSpeed = 0.5f;
     private float runSpeed = 2.0f;
-    private float pushSpeed = 1.0f;
     private Vector2 currentVelocity; 
     private bool pushed;
 
