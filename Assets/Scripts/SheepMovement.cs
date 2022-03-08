@@ -36,8 +36,11 @@ public class SheepMovement : MonoBehaviour
         }
 
         //move enemy: 
-        Vector2 temp_position = new Vector2(transform.position.x + (movementPerSecond.x * Time.deltaTime),
-        transform.position.y + (movementPerSecond.y * Time.deltaTime));
+        Vector3 temp_position = new Vector3(
+            transform.position.x + (movementPerSecond.x * Time.deltaTime),
+            transform.position.y + (movementPerSecond.y * Time.deltaTime),
+            transform.position.z
+        );
 
     /*    //upper left square
         if (temp_position.x > -16 && temp_position.x < -10 && temp_position.y < 9 && temp_position.y > 3)

@@ -12,7 +12,7 @@ public class RandomSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -30,7 +30,8 @@ public class RandomSpawner : MonoBehaviour
 
 
     void SpawnObjectAtRandom(){
-        Vector3 randomPos = Random.insideUnitCircle * radius;
+        Vector2 circleRandomPos = Random.insideUnitCircle * radius;
+        Vector3 randomPos = new Vector3(circleRandomPos.x, circleRandomPos.y, -1); // -1 to make sheep visible
         var val = Random.value;
         if (val < 0.5f){
             Instantiate(WhiteSheep, this.transform.position + randomPos, Quaternion.identity); 
