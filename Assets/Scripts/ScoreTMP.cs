@@ -1,0 +1,67 @@
+using UnityEngine;
+using TMPro;
+
+public class ScoreTMP : MonoBehaviour
+{
+    [SerializeField] private GameObject blackPen;
+    [SerializeField] private GameObject whitePen;
+    [SerializeField] private TMPro.TMP_Text score;
+    [SerializeField] private int playerNum;
+
+    private static ScoreTMP instance;
+
+    private int playerScore = 0;
+
+    private string getScoreText() {
+        return "P" + playerNum + " Score: " + playerScore.ToString();
+    }
+
+    void Awake()
+    {
+        instance = this;    
+    }
+
+    void Start()
+    {
+        score.text = getScoreText();
+    }
+
+    void Update()
+    {
+        playerScore = 0;
+
+        Collider2D blackPenCollider = blackPen.GetComponent<Collider2D>();
+        Collider2D whitePenCollider = whitePen.GetComponent<Collider2D>();
+
+        Collider2D[] inBlackPen = Physics2D.OverlapBoxAll(blackPenCollider.bounds.center, blackPenCollider.bounds.size, 0);
+        Collider2D[] inWhitePen = Physics2D.OverlapBoxAll(whitePenCollider.bounds.center, whitePenCollider.bounds.size, 0);
+
+        foreach (Collider2D entity in inBlackPen)
+        {
+            GameObject entityObject = entity.gameObject;
+            // It is a sheep
+            if (entityObject.layer == 7) {
+                if (entityObject.tag == "BlackSquare") {
+                    playerScore += 1;
+                } else if (entityObject.tag == "WhiteSquare") {
+                    playerScore -= 2;
+                }
+            }
+        }
+
+        foreach (Collider2D entity in inWhitePen)
+        {
+            GameObject entityObject = entity.gameObject;
+            // It is a sheep
+            if (entityObject.layer == 7) {
+                if (entityObject.tag == "BlackSquare") {
+                    playerScore -= 2;
+                } else if (entityObject.tag == "WhiteSquare") {
+                    playerScore += 1;
+                }
+            }
+        }
+
+        score.text = getScoreText();
+    }
+}
