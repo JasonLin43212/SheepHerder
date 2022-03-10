@@ -6,12 +6,13 @@ public class Dog : MonoBehaviour
 {
     [SerializeField] private System.String playerNumber;
     private Rigidbody2D body;
-    private Vector2 prevVelocity;
+    private Vector2 prevDirection;
     private float dashSpeed = 20;
-    private float speed = 4;
+    private float speed = 6;
     private float barkRadius = 3;
     private bool isDashing;
-    private int dashingCooldown;
+    private int currentDashingCooldown;
+    private int dashingCooldown = 15;
     private BoxCollider2D boxCollider;
 
     // Start is called before the first frame update
@@ -33,19 +34,19 @@ public class Dog : MonoBehaviour
             : KeyCode.Period;
         
         if (isDashing) {
-            body.velocity = prevVelocity * dashSpeed;
-            dashingCooldown--;
-            if (dashingCooldown <= 0) {
+            body.velocity = prevDirection * dashSpeed;
+            currentDashingCooldown--;
+            if (currentDashingCooldown <= 0) {
                 isDashing = false;
             }
         } else if (Input.GetKeyDown(dashKeyCode)) {
             isDashing = true;
-            dashingCooldown = 15;
+            currentDashingCooldown = 15;
         } else {
             float horizontalInput = Input.GetAxis("Horizontal" + playerNumber);
             float verticalInput = Input.GetAxis("Vertical" + playerNumber);
             body.velocity = new Vector2(horizontalInput * speed, verticalInput * speed);
-            prevVelocity = body.velocity.normalized;
+            prevDirection = body.velocity.normalized;
         }
 
         if (Input.GetKeyDown(barkKeyCode)) {

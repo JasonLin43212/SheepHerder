@@ -42,31 +42,6 @@ public class SheepMovement : MonoBehaviour
             }
         }
 
-
-    /*    //upper left square
-        if (temp_position.x > -16 && temp_position.x < -10 && temp_position.y < 9 && temp_position.y > 3)
-        {
-            return;
-        }
-        //lower left square
-        else if (temp_position.x > -16 && temp_position.x < -10 && temp_position.y < -3 && temp_position.y > -9){
-            return;
-        }
-        //lower right 
-        else if (temp_position.x > 9 && temp_position.x < 15 && temp_position.y < -3 && temp_position.y > -9)
-        {
-            return;
-        }
-        //upper right
-        else if (temp_position.x > 9 && temp_position.x < 15 && temp_position.y < 9 && temp_position.y > 3)
-        {
-            return;
-        }       
-        //only update if not in a pen
-        else{*/
-        /*}*/
-
-
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -82,7 +57,7 @@ public class SheepMovement : MonoBehaviour
         Vector2 runDirection = new Vector2(transform.position.x, transform.position.y) - dogLocation;
         currentVelocity = runDirection.normalized * runSpeed;
         latestDirectionChangeTime = Time.time;
-        directionChangeTime = Random.Range(4f, 6f);
+        directionChangeTime = Random.Range(2f, 4f);
     }
 
     public void push(Vector2 dogVelocity) {
