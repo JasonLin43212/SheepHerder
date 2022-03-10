@@ -8,7 +8,7 @@ public class Bark : MonoBehaviour
 
     public void setParams(GameObject dog_, float barkRadius_) {
         dog = dog_;
-        barkRadius = barkRadius_ * 1.5f;
+        barkRadius = barkRadius_ * 2f;
     }
 
     // Start is called before the first frame update

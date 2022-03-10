@@ -9,19 +9,21 @@ public class Dog : MonoBehaviour
     private Rigidbody2D body;
     private Vector2 prevDirection;
     private float dashSpeed = 20;
-    private float speed = 6;
+    private float speed = 8;
     private float barkRadius = 3;
     private bool isDashing;
     private int currentDashingCooldown;
     private int dashingCooldown = 15;
-    private BoxCollider2D boxCollider;
+    private Collider2D dogCollider;
+
+    private float transformNum = 0.75f;
     
 
     // Start is called before the first frame update
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
-        boxCollider = GetComponent<BoxCollider2D>();
+        dogCollider = GetComponent<Collider2D>();
     }
 
     // Update is called once per frame
@@ -47,6 +49,13 @@ public class Dog : MonoBehaviour
         } else {
             float horizontalInput = Input.GetAxis("Horizontal" + playerNumber);
             float verticalInput = Input.GetAxis("Vertical" + playerNumber);
+
+            if (horizontalInput > 0) {
+                transform.localScale = Vector3.one * transformNum;
+            } else if (horizontalInput < 0) {
+                transform.localScale = new Vector3(-transformNum, transformNum, transformNum);
+            }
+            
             body.velocity = new Vector2(horizontalInput * speed, verticalInput * speed);
             prevDirection = body.velocity.normalized;
         }
@@ -57,7 +66,7 @@ public class Dog : MonoBehaviour
     }
 
     private void bark() {
-        Collider2D[] affectedByBark = Physics2D.OverlapCircleAll(boxCollider.bounds.center, barkRadius);
+        Collider2D[] affectedByBark = Physics2D.OverlapCircleAll(dogCollider.bounds.center, barkRadius);
         foreach (Collider2D affectedCollider in affectedByBark) {
             GameObject affectedObject = affectedCollider.gameObject;
             if (affectedObject.layer == 7) { // 7 is the sheep layer

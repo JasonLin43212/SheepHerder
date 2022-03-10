@@ -7,7 +7,7 @@ public class RandomSpawner : MonoBehaviour
     [SerializeField] private GameObject WhiteSheep; //public GameObject ItemPrefab;
     [SerializeField] private GameObject BlackSheep; // black sheep
     [SerializeField] private float radius = 1; //public float radius = 1;
-    [SerializeField] private float totalSheep = 10; 
+    [SerializeField] private float totalSheep; 
     private float counter = 0; 
     // Start is called before the first frame update
     void Start()

@@ -11,10 +11,12 @@ public class SheepMovement : MonoBehaviour
     private float runSpeed = 2.0f;
     private Vector2 currentVelocity; 
     private bool pushed;
+    private CircleCollider2D sheepCollider;
 
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
+        sheepCollider = GetComponent<CircleCollider2D>();
         latestDirectionChangeTime = 0f;
         directionChangeTime = Random.Range(3f, 7f);
         calcuateNewMovementVector();
@@ -26,8 +28,12 @@ public class SheepMovement : MonoBehaviour
         latestDirectionChangeTime = Time.time;
         directionChangeTime = Random.Range(3f, 7f);
         pushed = false;
+        
         //create a random direction vector with the magnitude of 1, later multiply it with the velocity of the enemy
-        currentVelocity = new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f)).normalized * characterSpeed;
+        currentVelocity = inPen()
+            ? Vector2.zero
+            : new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f)).normalized * characterSpeed;
+
     }
 
     void Update()
@@ -43,10 +49,9 @@ public class SheepMovement : MonoBehaviour
         }
 
     }
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collisionInfo)
     {
-
-        if (collision.gameObject.tag == "Wall")
+        if (collisionInfo.gameObject.tag == "Wall")
         {
             calcuateNewMovementVector();
         }
@@ -56,6 +61,7 @@ public class SheepMovement : MonoBehaviour
         pushed = false;
         Vector2 runDirection = new Vector2(transform.position.x, transform.position.y) - dogLocation;
         currentVelocity = runDirection.normalized * runSpeed;
+        body.velocity = currentVelocity;
         latestDirectionChangeTime = Time.time;
         directionChangeTime = Random.Range(2f, 4f);
     }
@@ -66,4 +72,15 @@ public class SheepMovement : MonoBehaviour
         directionChangeTime = 1f;
         body.velocity = dogVelocity * 0.95f;
     }
+
+    private bool inPen() {
+        Collider2D[] overlaps = Physics2D.OverlapCircleAll(transform.position, sheepCollider.radius);
+        foreach (Collider2D overlap in overlaps) {
+            if (overlap.gameObject.tag == "Pen") {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
