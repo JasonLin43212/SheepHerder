@@ -5,6 +5,7 @@ using UnityEngine;
 public class Dog : MonoBehaviour
 {
     [SerializeField] private System.String playerNumber;
+    [SerializeField] private GameObject thisBark;
     private Rigidbody2D body;
     private Vector2 prevDirection;
     private float dashSpeed = 20;
@@ -14,6 +15,7 @@ public class Dog : MonoBehaviour
     private int currentDashingCooldown;
     private int dashingCooldown = 15;
     private BoxCollider2D boxCollider;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -62,6 +64,9 @@ public class Dog : MonoBehaviour
                 affectedObject.GetComponent<SheepMovement>().runAway(new Vector2(transform.position.x, transform.position.y));
             }
         }
+        GameObject currentBark = Instantiate(thisBark);
+        currentBark.GetComponent<Bark>().setParams(this.gameObject, barkRadius);
+
     }
 
     private void OnCollisionStay2D(Collision2D collisionInfo)
