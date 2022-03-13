@@ -5,6 +5,7 @@ public class Bite : MonoBehaviour
     private GameObject dog;
     private Vector2 size;
     private bool showBite;
+    
 
     public void setParams(GameObject dog_, Vector2 size_) {
         dog = dog_;
@@ -14,6 +15,12 @@ public class Bite : MonoBehaviour
 
     public void setBite(bool showBite_) {
         showBite = showBite_;
+    }
+
+    public void setSuccessBite(bool successBite) {
+        GetComponent<SpriteRenderer>().color = successBite
+            ? new Color(0.51f, 1, 0.56f, 0.7f)
+            : new Color(1, 0.35f, 0.63f, 0.7f);
     }
 
     // Update is called once per frame

@@ -7,11 +7,13 @@ public class Dog : MonoBehaviour
     [SerializeField] private System.String playerNumber;
     [SerializeField] private GameObject thisBark;
     [SerializeField] private GameObject biteArea;
+    [SerializeField] private GameObject home;
     private Rigidbody2D body;
     private Vector2 prevDirection;
     private Bite myBite;
     private float dashSpeed = 20;
     private float speed = 8;
+    private float homeSpeed = 0.15f;
     private float barkRadius = 3;
     private bool isDashing;
     private int currentDashingCooldown;
@@ -21,6 +23,8 @@ public class Dog : MonoBehaviour
     private float transformNum = 0.75f;
 
     private List<GameObject> bittenSheep = new List<GameObject>();
+    private List<Vector2> relativePos = new List<Vector2>();
+    private bool isGoingHome = false;
     
 
     // Start is called before the first frame update
@@ -35,9 +39,49 @@ public class Dog : MonoBehaviour
         myBite.setParams(this.gameObject, getBiteSize());
     }
 
+    void FixedUpdate()
+    {
+        if (isGoingHome) {
+            BoxCollider2D homeCollider = home.GetComponent<BoxCollider2D>();
+            Vector3 homeCenter3 = homeCollider.bounds.center;
+            Vector2 homeCenter2 = new Vector2(homeCenter3.x, homeCenter3.y);
+            Vector2 toHomeDirection = (homeCenter2 - body.position).normalized;
+
+            // check if the dog is back at home
+            Vector2 homeSize = new Vector2(homeCollider.bounds.size.x, homeCollider.bounds.size.y); 
+            Collider2D[] inHome = Physics2D.OverlapBoxAll(homeCenter2, homeSize, 0);
+            foreach (Collider2D colliderInHome in inHome) {
+                if (colliderInHome.gameObject == this.gameObject) {
+                    GetComponent<SpriteRenderer>().color = Color.white;
+                    isGoingHome = false;
+                    return;
+                }
+            }
+
+            body.velocity = Vector2.zero;
+            body.position += toHomeDirection * homeSpeed + new Vector2(0, Random.Range(-0.3f, 0.3f));
+
+            if (toHomeDirection.x > 0) {
+                transform.localScale = Vector3.one * transformNum;
+            } else if (toHomeDirection.x < 0) {
+                transform.localScale = new Vector3(-transformNum, transformNum, transformNum);
+            }
+
+            GetComponent<SpriteRenderer>().color = new Color(0, 1, 1, 0.5f);
+
+            return;
+        }
+          
+    }
+
     // Update is called once per frame
     void Update()
     {
+        if (isGoingHome) {
+            
+            return;
+        }
+
         KeyCode dashKeyCode = playerNumber == "1"
             ? KeyCode.BackQuote
             : KeyCode.Comma;
@@ -79,11 +123,8 @@ public class Dog : MonoBehaviour
             bite();
             myBite.setBite(true);
         } else if (Input.GetKeyUp(biteKeyCode)) {
-            myBite.setBite(false);
-            for (int i = 0; i < bittenSheep.Count; i++) {
-                bittenSheep[i].GetComponent<SheepMovement>().unBite();
-            }
-            bittenSheep.Clear();
+            stopBite();
+            myBite.setSuccessBite(false);
         }
 
         if (bittenSheep.Count > 0) {
@@ -91,11 +132,10 @@ public class Dog : MonoBehaviour
             List<Collider2D> affectedByBiteList = new List<Collider2D>(affectedByBite);
 
             // Check that the bitten sheep is still within range
-            foreach (GameObject bittenSheepObject in bittenSheep) {
+            for (int i = 0; i < bittenSheep.Count; i++) {
+                GameObject bittenSheepObject = bittenSheep[i];
                 if (affectedByBiteList.Contains(bittenSheepObject.GetComponent<Collider2D>())) {
-                    bittenSheepObject.GetComponent<SheepMovement>().drag(body.velocity);
-                } else {
-                    bittenSheepObject.GetComponent<SheepMovement>().drag(Vector2.zero);
+                    bittenSheepObject.GetComponent<SheepMovement>().drag(body.position + relativePos[i], body.velocity);
                 }
             }
         }
@@ -114,13 +154,29 @@ public class Dog : MonoBehaviour
             if (bittenObject.layer == 7) { // is a sheep
                 bool canBite = bittenObject.GetComponent<SheepMovement>().bite();
                 if (canBite) {
+                    myBite.setSuccessBite(true);
                     bittenSheep.Add(bittenObject);
+                    relativePos.Add(new Vector2(
+                        bittenObject.transform.position.x - body.position.x,
+                        bittenObject.transform.position.y - body.position.y
+                    ));
                 }
             } else if (bittenObject.layer == 8) { // is a dog
-                bittenObject.GetComponent<Dog>();
+                if (bittenObject != this.gameObject) {
+                    bittenObject.GetComponent<Dog>().goHome();
+                }
             }
 
         }
+    }
+
+    private void stopBite() {
+        myBite.setBite(false);
+        for (int i = 0; i < bittenSheep.Count; i++) {
+            bittenSheep[i].GetComponent<SheepMovement>().unBite();
+        }
+        bittenSheep.Clear();
+        relativePos.Clear();
     }
 
     public Vector2 getBiteCenter() {
@@ -134,8 +190,8 @@ public class Dog : MonoBehaviour
 
     public Vector2 getBiteSize() {
         return new Vector2(
-            1f,
-            dogCollider.bounds.size.y
+            1.2f,
+            dogCollider.bounds.size.y * 0.8f
         );
     }
 
@@ -152,4 +208,8 @@ public class Dog : MonoBehaviour
 
     }
 
+    public void goHome() {
+        isGoingHome = true;
+        stopBite();
+    }
 }

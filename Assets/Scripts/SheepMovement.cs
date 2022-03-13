@@ -75,10 +75,12 @@ public class SheepMovement : MonoBehaviour
 
     public void unBite() {
         biten = false;
+        calcuateNewMovementVector();
     }
 
-    public void drag(Vector2 velocity) {
-        body.velocity = velocity;
+    public void drag(Vector2 position, Vector2 velocity) {
+        body.position = new Vector3(position.x, position.y);
+        body.velocity = new Vector2(velocity.x, velocity.y * 0.1f);
     }
 
     private bool inPen() {
