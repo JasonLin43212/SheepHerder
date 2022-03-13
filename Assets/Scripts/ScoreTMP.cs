@@ -12,8 +12,8 @@ public class ScoreTMP : MonoBehaviour
 
     private int playerScore = 0;
 
-    private string getScoreText() {
-        return "P" + playerNum + " Score: " + playerScore.ToString();
+    private void updateScoreText() {
+        score.text = "P" + playerNum + " Score: " + playerScore.ToString();
     }
 
     void Awake()
@@ -23,12 +23,11 @@ public class ScoreTMP : MonoBehaviour
 
     void Start()
     {
-        score.text = getScoreText();
+        updateScoreText();
     }
 
     void Update()
     {
-        playerScore = 0;
 
         Collider2D blackPenCollider = blackPen.GetComponent<Collider2D>();
         Collider2D whitePenCollider = whitePen.GetComponent<Collider2D>();
@@ -41,11 +40,16 @@ public class ScoreTMP : MonoBehaviour
             GameObject entityObject = entity.gameObject;
             // It is a sheep
             if (entityObject.layer == 7) {
-                if (entityObject.tag == "BlackSquare") {
-                    playerScore += 1;
-                } else if (entityObject.tag == "WhiteSquare") {
-                    playerScore -= 2;
+                bool readyToDisappear = entityObject.GetComponent<SheepMovement>().readyToDisappear();
+                if (readyToDisappear) {
+                    if (entityObject.tag == "BlackSquare") {
+                        playerScore += 1;
+                    } else if (entityObject.tag == "WhiteSquare") {
+                        playerScore -= 2;
+                    }
+                    Destroy(entityObject);
                 }
+                
             }
         }
 
@@ -54,14 +58,18 @@ public class ScoreTMP : MonoBehaviour
             GameObject entityObject = entity.gameObject;
             // It is a sheep
             if (entityObject.layer == 7) {
-                if (entityObject.tag == "BlackSquare") {
-                    playerScore -= 2;
-                } else if (entityObject.tag == "WhiteSquare") {
-                    playerScore += 1;
+                bool readyToDisappear = entityObject.GetComponent<SheepMovement>().readyToDisappear();
+                if (readyToDisappear) {
+                    if (entityObject.tag == "BlackSquare") {
+                        playerScore -= 2;
+                    } else if (entityObject.tag == "WhiteSquare") {
+                        playerScore += 1;
+                    }
+                    Destroy(entityObject);
                 }
             }
         }
 
-        score.text = getScoreText();
+        updateScoreText();
     }
 }

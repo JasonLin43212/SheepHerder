@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SheepMovement : MonoBehaviour
 {
+    [SerializeField] private GameObject sheepBar;
+    private Sheepbar myBar;
     private Rigidbody2D body;
     private float latestDirectionChangeTime;
     private float directionChangeTime = 3f;
@@ -12,6 +14,8 @@ public class SheepMovement : MonoBehaviour
     private Vector2 currentVelocity; 
     private bool biten;
     private CircleCollider2D sheepCollider;
+    private int inPenFor;
+    private int disappearThreshold = 1000;
 
     void Start()
     {
@@ -20,7 +24,10 @@ public class SheepMovement : MonoBehaviour
         latestDirectionChangeTime = 0f;
         directionChangeTime = Random.Range(3f, 7f);
         calcuateNewMovementVector();
-        
+        inPenFor = 0;
+
+        myBar = sheepBar.GetComponent<Sheepbar>();
+        myBar.setParams(this.gameObject, disappearThreshold);
     }
 
     void calcuateNewMovementVector()
@@ -36,6 +43,14 @@ public class SheepMovement : MonoBehaviour
 
     void Update()
     {
+        if (inPen() && inPenFor < disappearThreshold) {
+            myBar.shouldShow(true);
+            inPenFor++;
+        } else {
+            inPenFor = 0;
+            myBar.shouldShow(false);
+        }
+
         if (biten) {
             return;
         }
@@ -84,7 +99,7 @@ public class SheepMovement : MonoBehaviour
 
     public void drag(Vector2 position, Vector2 velocity) {
         body.position = new Vector3(position.x, position.y);
-        body.velocity = new Vector2(velocity.x, velocity.y * 0.1f);
+        body.velocity = new Vector2(velocity.x, velocity.y);
     }
 
     private bool inPen() {
@@ -95,6 +110,14 @@ public class SheepMovement : MonoBehaviour
             }
         }
         return false;
+    }
+
+    public bool readyToDisappear() {
+        return inPenFor >= disappearThreshold;
+    }
+
+    public int getCurrentTimeInPen() {
+        return inPenFor;
     }
 
 }

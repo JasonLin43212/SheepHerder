@@ -149,8 +149,14 @@ public class Dog : MonoBehaviour
             // Check that the bitten sheep is still within range
             for (int i = 0; i < bittenSheep.Count; i++) {
                 GameObject bittenSheepObject = bittenSheep[i];
+                if (bittenSheepObject == null) {
+                    continue;
+                }
+                // Stop sheep from being given a velocity if they aren't within biting distance
                 if (affectedByBiteList.Contains(bittenSheepObject.GetComponent<Collider2D>())) {
                     bittenSheepObject.GetComponent<SheepMovement>().drag(body.position + relativePos[i], body.velocity);
+                } else {
+                    bittenSheepObject.GetComponent<SheepMovement>().drag(body.position + relativePos[i], Vector2.zero);
                 }
             }
         }
@@ -193,7 +199,9 @@ public class Dog : MonoBehaviour
     private void stopBite() {
         myBite.setBite(false);
         for (int i = 0; i < bittenSheep.Count; i++) {
-            bittenSheep[i].GetComponent<SheepMovement>().unBite();
+            if (bittenSheep[i] != null) {
+                bittenSheep[i].GetComponent<SheepMovement>().unBite();
+            }
         }
         bittenSheep.Clear();
         relativePos.Clear();
