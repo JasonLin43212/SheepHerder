@@ -5958,8 +5958,8 @@ RectTransform:
   - {fileID: 1874080404}
   - {fileID: 338394998}
   - {fileID: 1355517372}
-  - {fileID: 1329999856}
   - {fileID: 1093242704}
+  - {fileID: 1329999856}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6432,10 +6432,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -5832307672264002413, guid: d919530479515a698a7abf11bc813ba1, type: 3}
-      propertyPath: m_Radius
-      value: 1
-      objectReference: {fileID: 0}
+    - target: {fileID: 651102081395967961, guid: d919530479515a698a7abf11bc813ba1, type: 3}
+      propertyPath: biteArea
+      value: 
+      objectReference: {fileID: 1425657478389756654, guid: 6f7b3ad21aa706d81842295c9f1e6730, type: 3}
     - target: {fileID: 651102081395967961, guid: d919530479515a698a7abf11bc813ba1, type: 3}
       propertyPath: thisBark
       value: 
@@ -6499,6 +6499,30 @@ PrefabInstance:
     - target: {fileID: 728101392679143114, guid: d919530479515a698a7abf11bc813ba1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4750787110953960021, guid: d919530479515a698a7abf11bc813ba1, type: 3}
+      propertyPath: m_Size.x
+      value: 2.233086
+      objectReference: {fileID: 0}
+    - target: {fileID: 4750787110953960021, guid: d919530479515a698a7abf11bc813ba1, type: 3}
+      propertyPath: m_Size.y
+      value: 2.2330856
+      objectReference: {fileID: 0}
+    - target: {fileID: 4750787110953960021, guid: d919530479515a698a7abf11bc813ba1, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.23866129
+      objectReference: {fileID: 0}
+    - target: {fileID: 4750787110953960021, guid: d919530479515a698a7abf11bc813ba1, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.03977698
+      objectReference: {fileID: 0}
+    - target: {fileID: 4750787110953960021, guid: d919530479515a698a7abf11bc813ba1, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 3.73
+      objectReference: {fileID: 0}
+    - target: {fileID: 4750787110953960021, guid: d919530479515a698a7abf11bc813ba1, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 2.75
       objectReference: {fileID: 0}
     - target: {fileID: 5046902337542711665, guid: d919530479515a698a7abf11bc813ba1, type: 3}
       propertyPath: m_Name
@@ -6807,11 +6831,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 74579116}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 921, y: 571}
+  m_AnchoredPosition: {x: 924, y: 543}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1093242705
@@ -6843,8 +6867,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294902528
-  m_fontColor: {r: 0, g: 0.012358427, b: 1, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -6897,7 +6921,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -100.26326, w: -47.332405}
+  m_margin: {x: 0, y: 0, z: -50.17798, w: -47.332405}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -7053,11 +7077,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 74579116}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -897, y: 493}
+  m_AnchoredPosition: {x: -930, y: 535}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1329999857
@@ -7089,8 +7113,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190335
-  m_fontColor: {r: 1, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -7143,7 +7167,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -100.26326, w: -47.332405}
+  m_margin: {x: 0, y: 0, z: -51.243576, w: -47.332405}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -7767,10 +7791,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -5832307672264002413, guid: d919530479515a698a7abf11bc813ba1, type: 3}
-      propertyPath: m_Radius
-      value: 1
-      objectReference: {fileID: 0}
+    - target: {fileID: 651102081395967961, guid: d919530479515a698a7abf11bc813ba1, type: 3}
+      propertyPath: biteArea
+      value: 
+      objectReference: {fileID: 1425657478389756654, guid: 6f7b3ad21aa706d81842295c9f1e6730, type: 3}
     - target: {fileID: 651102081395967961, guid: d919530479515a698a7abf11bc813ba1, type: 3}
       propertyPath: thisBark
       value: 
@@ -7834,6 +7858,30 @@ PrefabInstance:
     - target: {fileID: 728101392679143114, guid: d919530479515a698a7abf11bc813ba1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4750787110953960021, guid: d919530479515a698a7abf11bc813ba1, type: 3}
+      propertyPath: m_Size.x
+      value: 2.1535304
+      objectReference: {fileID: 0}
+    - target: {fileID: 4750787110953960021, guid: d919530479515a698a7abf11bc813ba1, type: 3}
+      propertyPath: m_Size.y
+      value: 1.91487
+      objectReference: {fileID: 0}
+    - target: {fileID: 4750787110953960021, guid: d919530479515a698a7abf11bc813ba1, type: 3}
+      propertyPath: m_Offset.x
+      value: 0.13921845
+      objectReference: {fileID: 0}
+    - target: {fileID: 4750787110953960021, guid: d919530479515a698a7abf11bc813ba1, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.03977695
+      objectReference: {fileID: 0}
+    - target: {fileID: 4750787110953960021, guid: d919530479515a698a7abf11bc813ba1, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 3.63
+      objectReference: {fileID: 0}
+    - target: {fileID: 4750787110953960021, guid: d919530479515a698a7abf11bc813ba1, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 2.55
       objectReference: {fileID: 0}
     - target: {fileID: 5046902337542711665, guid: d919530479515a698a7abf11bc813ba1, type: 3}
       propertyPath: m_Name

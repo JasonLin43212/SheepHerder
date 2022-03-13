@@ -10,7 +10,7 @@ public class SheepMovement : MonoBehaviour
     private float characterSpeed = 0.5f;
     private float runSpeed = 2.0f;
     private Vector2 currentVelocity; 
-    private bool pushed;
+    private bool biten;
     private CircleCollider2D sheepCollider;
 
     void Start()
@@ -27,25 +27,24 @@ public class SheepMovement : MonoBehaviour
     {
         latestDirectionChangeTime = Time.time;
         directionChangeTime = Random.Range(3f, 7f);
-        pushed = false;
         
         //create a random direction vector with the magnitude of 1, later multiply it with the velocity of the enemy
         currentVelocity = inPen()
             ? Vector2.zero
             : new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f)).normalized * characterSpeed;
-
     }
 
     void Update()
     {
+        if (biten) {
+            return;
+        }
         //if the changeTime was reached, calculate a new movement vector
         if (Time.time - latestDirectionChangeTime > directionChangeTime)
         {
             calcuateNewMovementVector();
         } else {
-            if (!pushed) {
-                body.velocity = currentVelocity;
-            }
+            body.velocity = currentVelocity;
         }
 
     }
@@ -58,7 +57,6 @@ public class SheepMovement : MonoBehaviour
     }
 
     public void runAway(Vector2 dogLocation) {
-        pushed = false;
         Vector2 runDirection = new Vector2(transform.position.x, transform.position.y) - dogLocation;
         currentVelocity = runDirection.normalized * runSpeed;
         body.velocity = currentVelocity;
@@ -66,11 +64,21 @@ public class SheepMovement : MonoBehaviour
         directionChangeTime = Random.Range(2f, 4f);
     }
 
-    public void push(Vector2 dogVelocity) {
-        pushed = true;
-        latestDirectionChangeTime = Time.time;
-        directionChangeTime = 1f;
-        body.velocity = dogVelocity * 0.95f;
+    // Returns whether you can bite it or not
+    public bool bite() {
+        if (biten) { return false; }
+        else {
+            biten = true;
+            return true;
+        }
+    }
+
+    public void unBite() {
+        biten = false;
+    }
+
+    public void drag(Vector2 velocity) {
+        body.velocity = velocity;
     }
 
     private bool inPen() {
