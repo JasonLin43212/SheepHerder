@@ -8,7 +8,7 @@ public class SheepMovement : MonoBehaviour
     private float latestDirectionChangeTime;
     private float directionChangeTime = 3f;
     private float characterSpeed = 0.5f;
-    private float runSpeed = 2.0f;
+    private float runSpeed = 3.0f;
     private Vector2 currentVelocity; 
     private bool biten;
     private CircleCollider2D sheepCollider;
@@ -58,10 +58,14 @@ public class SheepMovement : MonoBehaviour
 
     public void runAway(Vector2 dogLocation) {
         Vector2 runDirection = new Vector2(transform.position.x, transform.position.y) - dogLocation;
-        currentVelocity = runDirection.normalized * runSpeed;
+        Vector2 randomOffset = new Vector2(
+            Random.Range(-0.5f, 0.5f), 
+            Random.Range(-0.5f, 0.5f)
+        );
+        currentVelocity = (runDirection + randomOffset).normalized * runSpeed;
         body.velocity = currentVelocity;
         latestDirectionChangeTime = Time.time;
-        directionChangeTime = Random.Range(2f, 4f);
+        directionChangeTime = Random.Range(1f, 3f);
     }
 
     // Returns whether you can bite it or not

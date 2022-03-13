@@ -8,13 +8,14 @@ public class Dog : MonoBehaviour
     [SerializeField] private GameObject thisBark;
     [SerializeField] private GameObject biteArea;
     [SerializeField] private GameObject home;
+    [SerializeField] private GameObject barkBar;
     private Rigidbody2D body;
     private Vector2 prevDirection;
     private Bite myBite;
     private float dashSpeed = 20;
     private float speed = 8;
     private float homeSpeed = 0.15f;
-    private float barkRadius = 3;
+    private float barkRadius = 5;
     private bool isDashing;
     private int currentDashingCooldown;
     private int dashingCooldown = 15;
@@ -25,6 +26,8 @@ public class Dog : MonoBehaviour
     private List<GameObject> bittenSheep = new List<GameObject>();
     private List<Vector2> relativePos = new List<Vector2>();
     private bool isGoingHome = false;
+    private int barkHoldDown = 40;
+    private int currentBarkHoldDown = 0;
     
 
     // Start is called before the first frame update
@@ -37,6 +40,9 @@ public class Dog : MonoBehaviour
         GameObject currentBite = Instantiate(biteArea);
         myBite = currentBite.GetComponent<Bite>();
         myBite.setParams(this.gameObject, getBiteSize());
+
+        barkBar.GetComponent<BarkBar>().setParams(this.gameObject, barkHoldDown);
+        barkBar.GetComponent<BarkBar>().shouldShow(false);
     }
 
     void FixedUpdate()
@@ -78,7 +84,6 @@ public class Dog : MonoBehaviour
     void Update()
     {
         if (isGoingHome) {
-            
             return;
         }
 
@@ -94,11 +99,21 @@ public class Dog : MonoBehaviour
             ? KeyCode.Alpha2
             : KeyCode.Slash;
         
+        // - You can dash
+        // - You cannot bark while dashing
+        // - You cannot initiate a dash while holding a bark
+        // - You cannot move while doing any of the above things
         if (isDashing) {
             body.velocity = prevDirection * dashSpeed;
             currentDashingCooldown--;
             if (currentDashingCooldown <= 0) {
                 isDashing = false;
+            }
+        } else if (Input.GetKey(barkKeyCode)) {
+            body.velocity = Vector2.zero;
+            barkBar.GetComponent<BarkBar>().shouldShow(true);
+            if (currentBarkHoldDown < barkHoldDown) {
+                currentBarkHoldDown++;
             }
         } else if (Input.GetKeyDown(dashKeyCode)) {
             isDashing = true;
@@ -140,9 +155,14 @@ public class Dog : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(barkKeyCode)) {
-            bark();
+        if (Input.GetKeyUp(barkKeyCode)) {
+            if (currentBarkHoldDown == barkHoldDown) {
+                bark();
+            }
+            currentBarkHoldDown = 0;
+            barkBar.GetComponent<BarkBar>().shouldShow(false);
         }
+
     }
 
     private void bite() {
@@ -211,5 +231,11 @@ public class Dog : MonoBehaviour
     public void goHome() {
         isGoingHome = true;
         stopBite();
+        currentBarkHoldDown = 0;
+        barkBar.GetComponent<BarkBar>().shouldShow(false);
+    }
+
+    public int getCurrentBarkHoldDown() {
+        return currentBarkHoldDown;
     }
 }
