@@ -13,12 +13,23 @@ public class ScoreTMP : MonoBehaviour
     private int playerScore = 0;
 
     private void updateScoreText() {
+
+        if (playerNum == 1)
+        {
+            PlayersScore.p1Score = playerScore;
+        }
+        else
+        {
+            PlayersScore.p2Score = playerScore;
+        }
+
         score.text = "P" + playerNum + " Score: " + playerScore.ToString();
     }
 
     void Awake()
     {
-        instance = this;    
+        instance = this;
+   
     }
 
     void Start()
@@ -28,7 +39,6 @@ public class ScoreTMP : MonoBehaviour
 
     void Update()
     {
-
         Collider2D blackPenCollider = blackPen.GetComponent<Collider2D>();
         Collider2D whitePenCollider = whitePen.GetComponent<Collider2D>();
 
