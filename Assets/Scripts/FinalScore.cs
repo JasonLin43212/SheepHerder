@@ -12,7 +12,7 @@ public class FinalScore : MonoBehaviour
     {
         finalScore = GetComponent<TMP_Text>();
 
-        finalScore.text = "P1: " + PlayersScore.p1Score + " v.s. P2: " + PlayersScore.p2Score;
+        finalScore.text = "P1: " + PlayersScore.p1Score + "    v.s.    P2: " + PlayersScore.p2Score;
     }
 
 }
