@@ -14,8 +14,7 @@ public class RandomSpawner : MonoBehaviour
     void Update()
     {   
         if (counter < totalSheep){
-            float progress = counter / totalSheep;
-            Invoke("SpawnObjectAtRandom", 0.2f * progress + 3 * (1 - progress)); 
+            Invoke("SpawnObjectAtRandom", 3); 
         }        
     }
 

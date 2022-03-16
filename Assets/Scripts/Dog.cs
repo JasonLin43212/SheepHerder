@@ -47,6 +47,9 @@ public class Dog : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (PlayersScore.pause) {
+            return;
+        }
         if (isGoingHome) {
             BoxCollider2D homeCollider = home.GetComponent<BoxCollider2D>();
             Vector3 homeCenter3 = homeCollider.bounds.center;
@@ -83,6 +86,9 @@ public class Dog : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (PlayersScore.pause) {
+            return;
+        }
         if (isGoingHome) {
             return;
         }

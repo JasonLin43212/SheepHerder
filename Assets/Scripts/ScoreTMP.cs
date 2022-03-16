@@ -42,8 +42,8 @@ public class ScoreTMP : MonoBehaviour
         Collider2D blackPenCollider = blackPen.GetComponent<Collider2D>();
         Collider2D whitePenCollider = whitePen.GetComponent<Collider2D>();
 
-        Collider2D[] inBlackPen = Physics2D.OverlapBoxAll(blackPenCollider.bounds.center, blackPenCollider.bounds.size, 0);
-        Collider2D[] inWhitePen = Physics2D.OverlapBoxAll(whitePenCollider.bounds.center, whitePenCollider.bounds.size, 0);
+        Collider2D[] inBlackPen = Physics2D.OverlapBoxAll(blackPenCollider.bounds.center, blackPenCollider.bounds.size + Vector3.one * 2, 0);
+        Collider2D[] inWhitePen = Physics2D.OverlapBoxAll(whitePenCollider.bounds.center, whitePenCollider.bounds.size + Vector3.one * 2, 0);
 
         foreach (Collider2D entity in inBlackPen)
         {

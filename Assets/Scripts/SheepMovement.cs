@@ -14,8 +14,11 @@ public class SheepMovement : MonoBehaviour
     private Vector2 currentVelocity; 
     private bool biten;
     private CircleCollider2D sheepCollider;
-    private int inPenFor;
-    private int disappearThreshold = 1000;
+    private float inPenFor;
+    private float disappearThreshold = 15; //in seconds
+    private float inPenStartTime;
+    private bool wasInPen;
+    private float transformNum = 0.5f;
 
     void Start()
     {
@@ -41,14 +44,28 @@ public class SheepMovement : MonoBehaviour
             : new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f)).normalized * characterSpeed;
     }
 
-    void Update()
-    {
-        if (inPen() && inPenFor < disappearThreshold) {
+    void FixedUpdate() {
+        if (PlayersScore.pause) {
+            return;
+        }
+        if (inPen()) {
+            if (!wasInPen) {
+                wasInPen = true;
+                inPenStartTime = Time.time;
+            }
             myBar.shouldShow(true);
-            inPenFor++;
+            inPenFor = Time.time - inPenStartTime;
         } else {
             inPenFor = 0;
+            wasInPen = false;
             myBar.shouldShow(false);
+        }
+    }
+
+    void Update()
+    {
+        if (PlayersScore.pause) {
+            return;
         }
 
         if (biten) {
@@ -60,6 +77,14 @@ public class SheepMovement : MonoBehaviour
             calcuateNewMovementVector();
         } else {
             body.velocity = currentVelocity;
+        }
+
+        if (!biten) {
+            if (body.velocity.x > 0) {
+                transform.localScale = Vector3.one * transformNum;
+            } else if (body.velocity.x < 0) {
+                transform.localScale = new Vector3(-transformNum, transformNum, transformNum);
+            }
         }
 
     }
@@ -103,7 +128,7 @@ public class SheepMovement : MonoBehaviour
     }
 
     private bool inPen() {
-        Collider2D[] overlaps = Physics2D.OverlapCircleAll(transform.position, sheepCollider.radius);
+        Collider2D[] overlaps = Physics2D.OverlapCircleAll(sheepCollider.bounds.center, sheepCollider.radius * transformNum);
         foreach (Collider2D overlap in overlaps) {
             if (overlap.gameObject.tag == "Pen") {
                 return true;
@@ -116,7 +141,7 @@ public class SheepMovement : MonoBehaviour
         return inPenFor >= disappearThreshold;
     }
 
-    public int getCurrentTimeInPen() {
+    public float getCurrentTimeInPen() {
         return inPenFor;
     }
 

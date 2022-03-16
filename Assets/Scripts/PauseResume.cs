@@ -30,6 +30,7 @@ public class PauseResume : MonoBehaviour
     public void PauseGame()
     {
         GamePaused = true;
+        PlayersScore.pause = true;
         PauseScreen.SetActive(true);
         PauseButton.SetActive(false);
     }
@@ -37,6 +38,7 @@ public class PauseResume : MonoBehaviour
     public void ResumeGame()
     {
         GamePaused = false;
+        PlayersScore.pause = false;
         PauseScreen.SetActive(false);
         PauseButton.SetActive(true);
     }

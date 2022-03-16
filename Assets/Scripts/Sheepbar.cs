@@ -5,13 +5,13 @@ using UnityEngine;
 public class Sheepbar : MonoBehaviour
 {
     private GameObject sheep;
-    private int maxDuration;
+    private float maxDuration;
     private bool show;
 
     void Start() {
         show = false;
     }
-    public void setParams(GameObject sheep_, int maxDuration_) {
+    public void setParams(GameObject sheep_, float maxDuration_) {
         sheep = sheep_;
         maxDuration = maxDuration_;
         show = false;
